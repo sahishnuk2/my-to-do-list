@@ -1,178 +1,42 @@
 import { useState } from "react";
+import Header from "./components/Header";
 import "./App.css";
+import Table from "./components/Table";
+import TaskManager from "./components/TaskManager";
 
 function App() {
+  const isAddingTask = true;
+
   return (
     <>
-      <div className="header">
-        <h1>To Do List</h1>
-      </div>
-      <div className="pending">
-        <p>Hi Sahishnu, you have no pending tasks left</p>
-      </div>
-      <div className="tasks">
-        <h2>Tasks</h2>
-        <div className="subject">
-          <table>
-            <thead>
-              <tr>
-                <th colSpan={5}>CS2100</th>
-              </tr>
-              <tr>
-                <th>Name</th>
-                <th>Deadline</th>
-                <th>Priority</th>
-                <th>Progress</th>
-                <th>isCompleted</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Task 1</td>
-                <td>25/08/25</td>
-                <td>High</td>
-                <td>Not Started</td>
-                <td>False</td>
-              </tr>
-              <tr>
-                <td>Task 2</td>
-                <td>25/08/25</td>
-                <td>High</td>
-                <td>In Progress</td>
-                <td>False</td>
-              </tr>
-              <tr>
-                <td>Task 3</td>
-                <td>25/08/25</td>
-                <td>High</td>
-                <td>Finished</td>
-                <td>True</td>
-              </tr>
-            </tbody>
-          </table>
-          <button className="add">Add Task</button>
+      <Header></Header>
+      <TaskManager />
+      {isAddingTask && (
+        <div className="adding-task">
+          <div className="adding-contents">
+            <div className="taskname task-details">
+              <p>Task Name:</p>
+              <input type="text"></input>
+            </div>
+            <div className="deadline task-details">
+              <p>Deadline:</p>
+              <input type="date"></input>
+            </div>
+            <div className="priority task-details">
+              <p>Priority:</p>
+              <select>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+            <div className="btns">
+              <button>Add Task</button>
+              <button>Cancel</button>
+            </div>
+          </div>
         </div>
-        <div className="subject">
-          <table>
-            <thead>
-              <tr>
-                <th colSpan={5}>ACC1701X</th>
-              </tr>
-              <tr>
-                <th>Name</th>
-                <th>Deadline</th>
-                <th>Priority</th>
-                <th>Progress</th>
-                <th>isCompleted</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Task 1</td>
-                <td>25/08/25</td>
-                <td>High</td>
-                <td>Not Started</td>
-                <td>False</td>
-              </tr>
-              <tr>
-                <td>Task 2</td>
-                <td>25/08/25</td>
-                <td>High</td>
-                <td>In Progress</td>
-                <td>False</td>
-              </tr>
-              <tr>
-                <td>Task 3</td>
-                <td>25/08/25</td>
-                <td>High</td>
-                <td>Finished</td>
-                <td>True</td>
-              </tr>
-            </tbody>
-          </table>
-          <button className="add">Add Task</button>
-        </div>
-        <div className="subject">
-          <table>
-            <thead>
-              <tr>
-                <th colSpan={5}>CS2103T</th>
-              </tr>
-              <tr>
-                <th>Name</th>
-                <th>Deadline</th>
-                <th>Priority</th>
-                <th>Progress</th>
-                <th>isCompleted</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Task 1</td>
-                <td>25/08/25</td>
-                <td>High</td>
-                <td>Not Started</td>
-                <td>False</td>
-              </tr>
-              <tr>
-                <td>Task 2</td>
-                <td>25/08/25</td>
-                <td>High</td>
-                <td>In Progress</td>
-                <td>False</td>
-              </tr>
-              <tr>
-                <td>Task 3</td>
-                <td>25/08/25</td>
-                <td>High</td>
-                <td>Finished</td>
-                <td>True</td>
-              </tr>
-            </tbody>
-          </table>
-          <button className="add">Add Task</button>
-        </div>
-        <div className="subject">
-          <table>
-            <thead>
-              <tr>
-                <th colSpan={5}>ST2334</th>
-              </tr>
-              <tr>
-                <th>Name</th>
-                <th>Deadline</th>
-                <th>Priority</th>
-                <th>Progress</th>
-                <th>isCompleted</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Task 1</td>
-                <td>25/08/25</td>
-                <td>High</td>
-                <td>Not Started</td>
-                <td>False</td>
-              </tr>
-              <tr>
-                <td>Task 2</td>
-                <td>25/08/25</td>
-                <td>High</td>
-                <td>In Progress</td>
-                <td>False</td>
-              </tr>
-              <tr>
-                <td>Task 3</td>
-                <td>25/08/25</td>
-                <td>High</td>
-                <td>Finished</td>
-                <td>True</td>
-              </tr>
-            </tbody>
-          </table>
-          <button className="add">Add Task</button>
-        </div>
-      </div>
+      )}
     </>
   );
 }
