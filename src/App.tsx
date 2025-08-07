@@ -13,6 +13,7 @@ function App() {
   const [isAddingSubject, setIsAddingSubject] = useState(false);
   const [state, setState] = useState<SubjectsMap>(initialState);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
 
   let pendingCount = 0;
   for (const subjectName in state) {
@@ -58,24 +59,48 @@ function App() {
     });
   }
 
+  function updateTask(subject: string, updatedTask: Task): void {
+    setState((prev) => ({
+      ...prev,
+      [subject]: {
+        ...prev[subject],
+        [updatedTask.id]: updatedTask,
+      },
+    }));
+    // const stateClone = structuredClone(state);
+    // const taskMap = stateClone[subject];
+    // taskMap[updatedTask.id] = updatedTask;
+    // setState(stateClone);
+  }
+
   return (
     <>
       <Header count={pendingCount}></Header>
       <TaskManager
         allTasks={state}
-        setAllTasks={setState}
         addSubject={() => setIsAddingSubject(true)}
         addTask={(subjectName: string) => {
           setSelectedSubject(subjectName);
           setIsAddingTask(true);
         }}
+        setEditingTask={setEditingTask}
+        setSelectedSubject={setSelectedSubject}
       />
-      {isAddingTask && (
+      {(isAddingTask || editingTask) && (
         <AddTaskPopUp
-          onClose={() => setIsAddingTask(false)}
+          task={editingTask}
+          onClose={() => {
+            setIsAddingTask(false);
+            setEditingTask(null);
+            setSelectedSubject(null);
+          }}
           onSubmit={(task) => {
-            if (selectedSubject !== null) {
-              addTask(selectedSubject, task);
+            if (selectedSubject) {
+              if (editingTask) {
+                updateTask(selectedSubject, task);
+              } else {
+                addTask(selectedSubject, task);
+              }
             }
           }}
         />

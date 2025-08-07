@@ -1,14 +1,22 @@
 import TableRow from "./TableRow";
 import "./Table.css";
-import type { TasksMap } from "../types";
+import type { Task, TasksMap } from "../types";
 
 type Prop = {
   subjectName: string;
   tasks: TasksMap;
   addTask: (subject: string) => void;
+  setEditingTask: (task: Task) => void;
+  setSelectedSubject: (subject: string) => void;
 };
 
-export default function Table({ subjectName, tasks, addTask }: Prop) {
+export default function Table({
+  subjectName,
+  tasks,
+  addTask,
+  setEditingTask,
+  setSelectedSubject,
+}: Prop) {
   return (
     <>
       <div className="subject">
@@ -28,7 +36,13 @@ export default function Table({ subjectName, tasks, addTask }: Prop) {
           </thead>
           <tbody>
             {Object.values(tasks).map((task) => (
-              <TableRow key={task.id} task={task} />
+              <TableRow
+                key={task.id}
+                task={task}
+                subjectName={subjectName}
+                setEditingTask={setEditingTask}
+                setSelectedSubject={setSelectedSubject}
+              />
             ))}
           </tbody>
         </table>

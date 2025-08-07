@@ -3,7 +3,7 @@ export interface Task {
   taskname: string;
   deadline: string;
   priority: string;
-  progress: "Not Started" | "In-progress" | "Completed";
+  progress: string;
 }
 
 export type TasksMap = {

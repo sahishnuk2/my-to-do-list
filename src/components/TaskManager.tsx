@@ -1,23 +1,28 @@
-import type { SubjectsMap } from "../types";
+import type { SubjectsMap, Task } from "../types";
 import Table from "./Table";
 import "./TaskManager.css";
 
 type Prop = {
   allTasks: SubjectsMap;
-  setAllTasks: React.Dispatch<React.SetStateAction<SubjectsMap>>;
   addSubject: () => void;
   addTask: (subject: string) => void;
+  setEditingTask: (task: Task) => void;
+  setSelectedSubject: (subject: string) => void;
 };
 
 export default function TaskManager({
   allTasks,
-  setAllTasks,
   addSubject,
   addTask,
+  setEditingTask,
+  setSelectedSubject,
 }: Prop) {
   function handleAddTask(subject: string) {
     addTask(subject);
   }
+  // function handleEditTask(subject: string) {
+  //   editTask(task);
+  // }
 
   return (
     <>
@@ -35,9 +40,13 @@ export default function TaskManager({
             subjectName={subject}
             tasks={taskMap}
             addTask={handleAddTask}
+            setEditingTask={setEditingTask}
+            setSelectedSubject={setSelectedSubject}
           />
         );
       })}
     </>
   );
 }
+
+// Add setEditTask and setSelectedSubject to table -> all the way to tablerow.
