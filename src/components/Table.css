@@ -1,0 +1,28 @@
+/* Individual Tables */
+.subject {
+  margin: 10px;
+  width: 90%;
+  max-width: 800px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table,
+th,
+td {
+  border: 1px solid var(--light-text);
+}
+
+td,
+th {
+  padding: 5px;
+  text-align: center;
+}
+
+/* Add Button */
+.add {
+  margin-top: 10px;
+}

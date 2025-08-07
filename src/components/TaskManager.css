@@ -1,1 +1,11 @@
+/* Task Manager */
+.tasks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
 
+.tasks > h2 {
+  margin-bottom: 10px;
+}

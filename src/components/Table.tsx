@@ -1,13 +1,21 @@
 import TableRow from "./TableRow";
+import "./Table.css";
+import type { TasksMap } from "../types";
 
-export default function Table() {
+type Prop = {
+  subjectName: string;
+  tasks: TasksMap;
+  addTask: (subject: string) => void;
+};
+
+export default function Table({ subjectName, tasks, addTask }: Prop) {
   return (
     <>
       <div className="subject">
         <table>
           <thead>
             <tr>
-              <th colSpan={6}>CS2100</th>
+              <th colSpan={6}>{subjectName}</th>
             </tr>
             <tr>
               <th>Name</th>
@@ -19,15 +27,15 @@ export default function Table() {
             </tr>
           </thead>
           <tbody>
-            <TableRow />
+            {Object.values(tasks).map((task) => (
+              <TableRow key={task.id} task={task} />
+            ))}
           </tbody>
         </table>
-        <Add />
+        <button className="add" onClick={() => addTask(subjectName)}>
+          Add Task
+        </button>
       </div>
     </>
   );
-}
-
-function Add() {
-  return <button className="add">Add Task</button>;
 }

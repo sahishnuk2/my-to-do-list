@@ -1,18 +1,23 @@
 import { useState } from "react";
+import type { Task } from "../types";
 
-// type Prop = {
-//   task: any;
-// };
+type Prop = {
+  task: Task;
+};
 
-export default function TableRow() {
+type ProgressProp = {
+  initialProg: string;
+};
+
+export default function TableRow({ task }: Prop) {
   return (
     <>
       <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td>{task.taskname}</td>
+        <td>{task.deadline}</td>
+        <td>{task.priority}</td>
         <td>
-          <ProgressBtn />
+          <ProgressBtn initialProg={task.progress} />
         </td>
         <td>
           <button>Edit</button>
@@ -25,9 +30,9 @@ export default function TableRow() {
   );
 }
 
-function ProgressBtn() {
+function ProgressBtn({ initialProg }: ProgressProp) {
   const progStates = ["Not Started", "In-progress", "Completed"];
-  const [progress, setProgress] = useState(progStates[0]);
+  const [progress, setProgress] = useState(initialProg);
 
   return (
     <button
