@@ -23,6 +23,10 @@ Deployed with [Vercel](https://vercel.com), auto-updates on every push to the ma
 
 ---
 
+### Live Demo
+
+Check out the live app here: [https://my-to-do-list-h0z34te8v-sahishnus-projects-505f4c46.vercel.app](https://my-to-do-list-h0z34te8v-sahishnus-projects-505f4c46.vercel.app)
+
 ### Future Improvements
 
 - User authentication for personalized task lists  
