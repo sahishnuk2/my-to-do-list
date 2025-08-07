@@ -6,6 +6,7 @@ type Prop = {
   subjectName: string;
   setEditingTask: (task: Task) => void;
   setSelectedSubject: (subject: string) => void;
+  deleteTask: (subject: string, task: Task) => void;
 };
 
 type ProgressProp = {
@@ -18,6 +19,7 @@ export default function TableRow({
   subjectName,
   setEditingTask,
   setSelectedSubject,
+  deleteTask,
 }: Prop) {
   return (
     <>
@@ -39,7 +41,7 @@ export default function TableRow({
           </button>
         </td>
         <td>
-          <button>Delete</button>
+          <button onClick={() => deleteTask(subjectName, task)}>Delete</button>
         </td>
       </tr>
     </>

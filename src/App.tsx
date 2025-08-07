@@ -73,6 +73,21 @@ function App() {
     // setState(stateClone);
   }
 
+  function deleteTask(subject: string, task: Task): void {
+    setState((prev) => {
+      const taskMap = { ...prev[subject] };
+      delete taskMap[task.id];
+      return {
+        ...prev,
+        [subject]: taskMap,
+      };
+    });
+
+    setEditingTask(null);
+    setSelectedSubject(null);
+    setIsAddingTask(false);
+  }
+
   return (
     <>
       <Header count={pendingCount}></Header>
@@ -85,6 +100,7 @@ function App() {
         }}
         setEditingTask={setEditingTask}
         setSelectedSubject={setSelectedSubject}
+        deleteTask={deleteTask}
       />
       {(isAddingTask || editingTask) && (
         <AddTaskPopUp
