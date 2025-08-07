@@ -10,6 +10,7 @@ type Prop = {
   setSelectedSubject: (subject: string) => void;
   deleteTask: (subject: string, task: Task) => void;
   deleteSubject: (subject: string) => void;
+  updateProgress: (subject: string, task: Task, progress: string) => void;
 };
 
 export default function TaskManager({
@@ -20,6 +21,7 @@ export default function TaskManager({
   setSelectedSubject,
   deleteTask,
   deleteSubject,
+  updateProgress,
 }: Prop) {
   function handleAddTask(subject: string) {
     addTask(subject);
@@ -47,6 +49,7 @@ export default function TaskManager({
             setSelectedSubject={setSelectedSubject}
             deleteTask={deleteTask}
             deleteSubject={deleteSubject}
+            updateProgress={updateProgress}
           />
         );
       })}

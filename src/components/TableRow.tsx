@@ -7,11 +7,14 @@ type Prop = {
   setEditingTask: (task: Task) => void;
   setSelectedSubject: (subject: string) => void;
   deleteTask: (subject: string, task: Task) => void;
+  updateProgress: (subject: string, task: Task, progress: string) => void;
 };
 
 type ProgressProp = {
   initialProg: string;
   task: Task;
+  updateProgress: (subject: string, task: Task, priority: string) => void;
+  subjectName: string;
 };
 
 export default function TableRow({
@@ -20,6 +23,7 @@ export default function TableRow({
   setEditingTask,
   setSelectedSubject,
   deleteTask,
+  updateProgress,
 }: Prop) {
   return (
     <>
@@ -28,7 +32,12 @@ export default function TableRow({
         <td>{task.deadline}</td>
         <td>{task.priority}</td>
         <td>
-          <ProgressBtn initialProg={task.progress} task={task} />
+          <ProgressBtn
+            initialProg={task.progress}
+            task={task}
+            subjectName={subjectName}
+            updateProgress={updateProgress}
+          />
         </td>
         <td>
           <button
@@ -57,7 +66,12 @@ export default function TableRow({
   );
 }
 
-function ProgressBtn({ initialProg, task }: ProgressProp) {
+function ProgressBtn({
+  initialProg,
+  task,
+  subjectName,
+  updateProgress,
+}: ProgressProp) {
   const progStates = ["Not Started", "In-progress", "Completed"];
   const [progress, setProgress] = useState(initialProg);
 
@@ -65,7 +79,8 @@ function ProgressBtn({ initialProg, task }: ProgressProp) {
     const currIndex = progStates.findIndex((prog) => prog === progress);
     const nextProgress = progStates[(currIndex + 1) % 3];
     setProgress(nextProgress);
-    task.progress = nextProgress;
+
+    updateProgress(subjectName, task, nextProgress);
   }
 
   return (

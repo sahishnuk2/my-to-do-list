@@ -38,7 +38,6 @@ function App() {
         return prev;
       }
       setIsAddingSubject(false);
-      console.log(state);
       return {
         ...prev,
         [subjectName]: {},
@@ -101,6 +100,18 @@ function App() {
     setIsAddingTask(false);
   }
 
+  function updateProgress(subject: string, task: Task, progress: string) {
+    setState((prev) => {
+      const subjectTasks = { ...prev[subject] };
+      const taskToUpdate = { ...subjectTasks[task.id], progress };
+      subjectTasks[task.id] = taskToUpdate;
+      return {
+        ...prev,
+        [subject]: subjectTasks,
+      };
+    });
+  }
+
   return (
     <>
       <Header count={pendingCount}></Header>
@@ -115,6 +126,7 @@ function App() {
         setSelectedSubject={setSelectedSubject}
         deleteTask={deleteTask}
         deleteSubject={deleteSubject}
+        updateProgress={updateProgress}
       />
       {(isAddingTask || editingTask) && (
         <AddTaskPopUp

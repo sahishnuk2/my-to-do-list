@@ -10,6 +10,7 @@ type Prop = {
   setSelectedSubject: (subject: string) => void;
   deleteTask: (subject: string, task: Task) => void;
   deleteSubject: (subject: string) => void;
+  updateProgress: (subject: string, task: Task, progress: string) => void;
 };
 
 export default function Table({
@@ -20,6 +21,7 @@ export default function Table({
   setSelectedSubject,
   deleteTask,
   deleteSubject,
+  updateProgress,
 }: Prop) {
   return (
     <>
@@ -47,6 +49,7 @@ export default function Table({
                 setEditingTask={setEditingTask}
                 setSelectedSubject={setSelectedSubject}
                 deleteTask={deleteTask}
+                updateProgress={updateProgress}
               />
             ))}
           </tbody>
