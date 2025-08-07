@@ -88,6 +88,19 @@ function App() {
     setIsAddingTask(false);
   }
 
+  function deleteSubject(subject: string) {
+    setState((prev) => {
+      const newState = { ...prev };
+      delete newState[subject];
+      return newState;
+    });
+
+    // Optional cleanup
+    setEditingTask(null);
+    setSelectedSubject(null);
+    setIsAddingTask(false);
+  }
+
   return (
     <>
       <Header count={pendingCount}></Header>
@@ -101,6 +114,7 @@ function App() {
         setEditingTask={setEditingTask}
         setSelectedSubject={setSelectedSubject}
         deleteTask={deleteTask}
+        deleteSubject={deleteSubject}
       />
       {(isAddingTask || editingTask) && (
         <AddTaskPopUp

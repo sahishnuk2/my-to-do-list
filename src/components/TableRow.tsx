@@ -41,7 +41,16 @@ export default function TableRow({
           </button>
         </td>
         <td>
-          <button onClick={() => deleteTask(subjectName, task)}>Delete</button>
+          <button
+            onClick={() => {
+              if (confirm(`Delete ${task.taskname}?`)) {
+                // see if needed
+                deleteTask(subjectName, task);
+              }
+            }}
+          >
+            Delete
+          </button>
         </td>
       </tr>
     </>

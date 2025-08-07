@@ -9,6 +9,7 @@ type Prop = {
   setEditingTask: (task: Task) => void;
   setSelectedSubject: (subject: string) => void;
   deleteTask: (subject: string, task: Task) => void;
+  deleteSubject: (subject: string) => void;
 };
 
 export default function TaskManager({
@@ -18,6 +19,7 @@ export default function TaskManager({
   setEditingTask,
   setSelectedSubject,
   deleteTask,
+  deleteSubject,
 }: Prop) {
   function handleAddTask(subject: string) {
     addTask(subject);
@@ -32,7 +34,6 @@ export default function TaskManager({
         <h2>Tasks</h2>
         <div className="btns">
           <button onClick={addSubject}>Add new subject</button>
-          <button>Delete Subject</button>
         </div>
       </div>
       {Object.entries(allTasks).map(([subject, taskMap]) => {
@@ -45,6 +46,7 @@ export default function TaskManager({
             setEditingTask={setEditingTask}
             setSelectedSubject={setSelectedSubject}
             deleteTask={deleteTask}
+            deleteSubject={deleteSubject}
           />
         );
       })}

@@ -26,3 +26,8 @@ th {
 .add {
   margin-top: 10px;
 }
+
+.button-table {
+  display: flex;
+  justify-content: space-between;
+}

@@ -9,6 +9,7 @@ type Prop = {
   setEditingTask: (task: Task) => void;
   setSelectedSubject: (subject: string) => void;
   deleteTask: (subject: string, task: Task) => void;
+  deleteSubject: (subject: string) => void;
 };
 
 export default function Table({
@@ -18,6 +19,7 @@ export default function Table({
   setEditingTask,
   setSelectedSubject,
   deleteTask,
+  deleteSubject,
 }: Prop) {
   return (
     <>
@@ -49,9 +51,21 @@ export default function Table({
             ))}
           </tbody>
         </table>
-        <button className="add" onClick={() => addTask(subjectName)}>
-          Add Task
-        </button>
+        <div className="button-table">
+          <button className="add" onClick={() => addTask(subjectName)}>
+            Add Task
+          </button>
+          <button
+            className="add"
+            onClick={() => {
+              if (confirm(`Delete all tasks for subject "${subjectName}"?`)) {
+                deleteSubject(subjectName);
+              }
+            }}
+          >
+            Delete Subject
+          </button>
+        </div>
       </div>
     </>
   );
