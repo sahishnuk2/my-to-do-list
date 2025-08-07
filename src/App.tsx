@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import "./App.css";
 import TaskManager from "./components/TaskManager";
@@ -14,6 +14,22 @@ function App() {
   const [state, setState] = useState<SubjectsMap>(initialState);
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
+
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("my-tasks");
+    if (saved) {
+      setState(JSON.parse(saved));
+    }
+    setHasLoaded(true); // wait until data is loaded
+  }, []);
+
+  useEffect(() => {
+    if (hasLoaded) {
+      localStorage.setItem("my-tasks", JSON.stringify(state));
+    }
+  }, [state, hasLoaded]);
 
   let pendingCount = 0;
   for (const subjectName in state) {
@@ -114,44 +130,50 @@ function App() {
 
   return (
     <>
-      <Header count={pendingCount}></Header>
-      <TaskManager
-        allTasks={state}
-        addSubject={() => setIsAddingSubject(true)}
-        addTask={(subjectName: string) => {
-          setSelectedSubject(subjectName);
-          setIsAddingTask(true);
-        }}
-        setEditingTask={setEditingTask}
-        setSelectedSubject={setSelectedSubject}
-        deleteTask={deleteTask}
-        deleteSubject={deleteSubject}
-        updateProgress={updateProgress}
-      />
-      {(isAddingTask || editingTask) && (
-        <AddTaskPopUp
-          task={editingTask}
-          onClose={() => {
-            setIsAddingTask(false);
-            setEditingTask(null);
-            setSelectedSubject(null);
-          }}
-          onSubmit={(task) => {
-            if (selectedSubject) {
-              if (editingTask) {
-                updateTask(selectedSubject, task);
-              } else {
-                addTask(selectedSubject, task);
-              }
-            }
-          }}
-        />
-      )}
-      {isAddingSubject && (
-        <AddSubjectPopUp
-          onClose={() => setIsAddingSubject(false)}
-          onSubmit={(subjectName) => addSubject(subjectName)}
-        />
+      {!hasLoaded ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <Header count={pendingCount}></Header>
+          <TaskManager
+            allTasks={state}
+            addSubject={() => setIsAddingSubject(true)}
+            addTask={(subjectName: string) => {
+              setSelectedSubject(subjectName);
+              setIsAddingTask(true);
+            }}
+            setEditingTask={setEditingTask}
+            setSelectedSubject={setSelectedSubject}
+            deleteTask={deleteTask}
+            deleteSubject={deleteSubject}
+            updateProgress={updateProgress}
+          />
+          {(isAddingTask || editingTask) && (
+            <AddTaskPopUp
+              task={editingTask}
+              onClose={() => {
+                setIsAddingTask(false);
+                setEditingTask(null);
+                setSelectedSubject(null);
+              }}
+              onSubmit={(task) => {
+                if (selectedSubject) {
+                  if (editingTask) {
+                    updateTask(selectedSubject, task);
+                  } else {
+                    addTask(selectedSubject, task);
+                  }
+                }
+              }}
+            />
+          )}
+          {isAddingSubject && (
+            <AddSubjectPopUp
+              onClose={() => setIsAddingSubject(false)}
+              onSubmit={(subjectName) => addSubject(subjectName)}
+            />
+          )}
+        </>
       )}
     </>
   );
