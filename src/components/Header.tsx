@@ -11,7 +11,13 @@ export default function Header({ count }: Prop) {
         <h1>To Do List</h1>
       </div>
       <div className="pending">
-        <p>Hi Sahishnu, you have {count} pending tasks left</p>
+        <p>
+          {count === 0
+            ? "You have completed all your tasks!"
+            : `You have ${count} pending ${
+                count === 1 ? "task" : "tasks"
+              } left!`}
+        </p>
       </div>
     </>
   );
