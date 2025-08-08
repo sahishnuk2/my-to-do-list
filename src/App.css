@@ -28,3 +28,11 @@ button:hover {
   opacity: 0.9;
   cursor: pointer;
 }
+
+.sorters {
+  margin-bottom: 15px;
+}
+
+.sorters > button {
+  margin: 10px;
+}

@@ -128,6 +128,39 @@ function App() {
     });
   }
 
+  function handleSort(sortBy: "priority" | "deadline") {
+    setState((prev) => {
+      const priorityRank: Record<string, number> = {
+        High: 3,
+        Medium: 2,
+        Low: 1,
+      };
+
+      const newState: SubjectsMap = {};
+
+      for (const subject in prev) {
+        const taskMap = prev[subject];
+        const sorted = Object.entries(taskMap).sort(([, task1], [, task2]) => {
+          if (sortBy === "priority") {
+            return priorityRank[task2.priority] - priorityRank[task1.priority]; // reversed because i want high on top
+          } else {
+            const dateA = task1.deadline
+              ? new Date(task1.deadline).getTime()
+              : Infinity;
+            const dateB = task2.deadline
+              ? new Date(task2.deadline).getTime()
+              : Infinity;
+            return dateA - dateB;
+          }
+        });
+
+        newState[subject] = Object.fromEntries(sorted);
+      }
+
+      return newState;
+    });
+  }
+
   return (
     <>
       {!hasLoaded ? (
@@ -135,6 +168,14 @@ function App() {
       ) : (
         <>
           <Header count={pendingCount}></Header>
+          <div className="sorters">
+            <button onClick={() => handleSort("priority")}>
+              Sort By Priority
+            </button>
+            <button onClick={() => handleSort("deadline")}>
+              Sort By Deadline
+            </button>
+          </div>
           <TaskManager
             allTasks={state}
             addSubject={() => setIsAddingSubject(true)}
