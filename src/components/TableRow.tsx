@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Task } from "../types";
 
 type Prop = {
@@ -25,12 +25,39 @@ export default function TableRow({
   deleteTask,
   updateProgress,
 }: Prop) {
+  const [, setNow] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setNow(new Date()); // triggers re-render
+    }, 60 * 1000); // check every minute
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <>
       <tr>
         <td>{task.taskname}</td>
-        <td>{task.deadline}</td>
-        <td>{task.priority}</td>
+        <td
+          style={{
+            color: new Date(task.deadline) < new Date() ? "red" : "#dcdcdc",
+          }}
+        >
+          {task.deadline ? new Date(task.deadline).toLocaleDateString() : ""}
+        </td>
+        <td
+          style={{
+            color:
+              task.priority === "High"
+                ? "red"
+                : task.priority == "Medium"
+                ? "orange"
+                : "#dcdcdc",
+          }}
+        >
+          {task.priority}
+        </td>
         <td>
           <ProgressBtn
             initialProg={task.progress}
