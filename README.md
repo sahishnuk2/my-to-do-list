@@ -25,7 +25,7 @@ Deployed with [Vercel](https://vercel.com), auto-updates on every push to the ma
 
 ### Live Demo
 
-Check out the live app here: [https://my-to-do-list-beta-rose.vercel.app/](https://my-to-do-list-beta-rose.vercel.app/)
+Check out the live app here: [https://todolist.sahishnu.dev](https://todolist.sahishnu.dev)
 
 ### Future Improvements
 
