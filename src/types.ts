@@ -1,5 +1,5 @@
 export interface Task {
-  id: string; // shld be same as taskname -> to used to get the specific function
+  id: string;
   taskname: string;
   deadline: string;
   priority: string;

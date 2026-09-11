@@ -17,6 +17,19 @@ type ProgressProp = {
   subjectName: string;
 };
 
+function getLocalDateString(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+function formatLocalDate(dateString: string): string {
+  const [year, month, day] = dateString.split("-").map(Number);
+  return new Date(year, month - 1, day).toLocaleDateString();
+}
+
 export default function TableRow({
   task,
   subjectName,
@@ -25,7 +38,7 @@ export default function TableRow({
   deleteTask,
   updateProgress,
 }: Prop) {
-  const [, setNow] = useState(new Date());
+  const [now, setNow] = useState(new Date());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -35,16 +48,19 @@ export default function TableRow({
     return () => clearInterval(timer);
   }, []);
 
+  const isOverdue =
+    Boolean(task.deadline) && task.deadline < getLocalDateString(now);
+
   return (
     <>
       <tr>
         <td>{task.taskname}</td>
         <td
           style={{
-            color: new Date(task.deadline) < new Date() ? "red" : "#dcdcdc",
+            color: isOverdue ? "red" : "#dcdcdc",
           }}
         >
-          {task.deadline ? new Date(task.deadline).toLocaleDateString() : ""}
+          {task.deadline ? formatLocalDate(task.deadline) : ""}
         </td>
         <td
           style={{

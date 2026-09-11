@@ -144,13 +144,9 @@ function App() {
           if (sortBy === "priority") {
             return priorityRank[task2.priority] - priorityRank[task1.priority]; // reversed because i want high on top
           } else {
-            const dateA = task1.deadline
-              ? new Date(task1.deadline).getTime()
-              : Infinity;
-            const dateB = task2.deadline
-              ? new Date(task2.deadline).getTime()
-              : Infinity;
-            return dateA - dateB;
+            if (!task1.deadline) return task2.deadline ? 1 : 0;
+            if (!task2.deadline) return -1;
+            return task1.deadline.localeCompare(task2.deadline);
           }
         });
 
